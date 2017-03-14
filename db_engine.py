@@ -319,10 +319,10 @@ def get_temporal_person_tweet_sentiment(name):
 
 # done
 def get_movie_person_raiting(movie, people_list):
-    people_dict = {}
+    people_dict = []
     pl = people_list.split(',')
     for person in pl:
-        people_dict[person] = get_movie_person_tweet_sentiment(movie, person.lower())
+        people_dict.append([person, get_movie_person_tweet_sentiment(movie, person.lower())])
     return people_dict
 
 # done
@@ -336,7 +336,9 @@ def get_matched_movie_names(title):
 def get_movie_page_data(movie_id):
     start_time = time.time()
     movie_data = {}
+    s_time = time.time()
     movie = movie_find_one({'_id': movie_id })
+    print('get movies in '+ str(time.time()-s_time) + ' s')
     movie_data['id'] = movie['_id']
     movie_data['title'] = movie['Title']
     movie_data['poster'] = movie['Poster'] if 'Poster' in movie else '---'
@@ -351,14 +353,24 @@ def get_movie_page_data(movie_id):
     movie_data['imdbRating'] = movie['imdbRating'] if 'imdbRating' in movie else '---'
 
     # ------------------------------------------------------------
+    s_time = time.time()
     movie_data['twitterRating'] = get_movie_tweet_sentiment(movie)
+    print('get movie sentiment in '+ str(time.time()-s_time) + ' s')
+    s_time = time.time()
     movie_data['temporalTwitterRating'] = get_temporal_movie_tweet_sentiment(movie)
+    print('get temporal movie sentiment in '+ str(time.time()-s_time) + ' s')
 
     # ------------------------------------------------------------
 
-    movie_data['director'] = get_movie_person_raiting(movie, movie['Director']) if 'Director' in movie else {}
-    movie_data['writer'] = get_movie_person_raiting(movie, movie['Writer']) if 'Writer' in movie else {}
-    movie_data['actors'] = get_movie_person_raiting(movie, movie['Actors']) if 'Actors' in movie else {}
+    s_time = time.time()
+    movie_data['director'] = get_movie_person_raiting(movie, movie['Director']) if 'Director' in movie else []
+    print('get director sentiment in '+ str(time.time()-s_time) + ' s')
+    s_time = time.time()
+    movie_data['writer'] = get_movie_person_raiting(movie, movie['Writer']) if 'Writer' in movie else []
+    print('get writer sentiment in '+ str(time.time()-s_time) + ' s')
+    s_time = time.time()
+    movie_data['actors'] = get_movie_person_raiting(movie, movie['Actors']) if 'Actors' in movie else []
+    print('get actors sentiment in '+ str(time.time()-s_time) + ' s')
     print('The request has been executed in '+ str(time.time()-start_time) + ' s')
 
     return movie_data
