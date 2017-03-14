@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+    <head>
+		<link rel="stylesheet" href="/static/css/style.css" />
+    </head>
+    <body ng-app="myMoviePage">
+
+		<form action="." method="POST">
+			Movie Name:
+			<input type="text" name="movie_name" placeholder="Enter a name here">
+			<input type="Submit" name="submit" value="Send">
+		</form>
+
+		<h1>{{ md["title"] }}</h1>
+
+		Poster: 
+
+		<img src=md["poster"] alt="No Poster Picture Exist" height="500" width="500">
+
+		<div>
+			<h2>Plot:</h2>
+			<p>{{ md["plot"] }}</p>
+			<table>
+				<tbody>
+					<tr>
+				      <td>Rated</td>
+				      <td>{{ md["rated"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>Language</td>
+				      <td>{{ md["language"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>Country</td>
+				      <td>{{ md["country"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>Released</td>
+				      <td>{{ md["released"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>Year</td>
+				      <td>{{ md["year"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>Genre</td>
+				      <td>{{ md["genre"] }}</td>
+				    </tr>
+				</tbody>
+			</table> 
+		</div>
+
+		<div>
+			<table>
+				<tbody>
+				    <tr>
+				      <td>IMDB Votes</td>
+				      <td>{{ md["imdbVotes"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>IMDB Rating</td>
+				      <td>{{ md["imdbRating"] }}</td>
+				    </tr>
+				    <tr>
+				      <td>Twitter Rating</td>
+				      <td>{{ md["twitterRating"] }}</td>
+				    </tr>
+				</tbody>
+			</table> 
+		</div>
+
+		<div>
+			<h2>Director(s):</h2>
+			<table>
+				<tbody>
+					<tr>
+		    			<th>Director Name</th>
+		    			<th>Movie Tweet Sentiment</th> 
+		  			</tr>
+					{% for row in md["director"] %}
+				    <tr>
+				      <td>{{ row[0] }}</td>
+				      <td>{{ row[1] }}</td>
+				    </tr>
+					{% endfor %}
+				</tbody>
+			</table> 
+			<h2>Writer(s):</h2>
+			<table>
+				<tbody>
+					<tr>
+		    			<th>Writer Name</th>
+		    			<th>Movie Tweet Sentiment</th> 
+		  			</tr>
+					{% for row in md["writer"] %}
+				    <tr>
+				      <td>{{ row[0] }}</td>
+				      <td>{{ row[1] }}</td>
+				    </tr>
+					{% endfor %}
+				</tbody>
+			</table> 
+		</div>
+
+		<div>
+			<h2>Actor:</h2>
+			<table>
+				<tbody>
+					<tr>
+		    			<th>Actor Name</th>
+		    			<th>Movie Tweet Sentiment</th> 
+		  			</tr>
+					{% for row in md["actors"] %}
+				    <tr>
+				      <td>{{ row[0] }}</td>
+				      <td>{{ row[1] }}</td>
+				    </tr>
+					{% endfor %}
+				</tbody>
+			</table> 
+		</div>
+
+		<div>
+			<h2>Temporal Tweet Sentiment:</h2>
+			# temporal sentiment
+		</div>
+
+	</body>
+</html>
